@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CardShare - Celtic Season Card Transfer Platform</title>
+    <meta name="description" content="Secure Celtic season card transfers with revenue sharing to Celtic Foundation. Professional demonstration of CardShare platform technology.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0fdf4 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+        }
+        
+        .demo-container {
+            width: 100%;
+            max-width: 420px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            position: relative;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 80%, #166534 100%);
+            color: white;
+            padding: 50px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+            animation: shimmer 4s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+        
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #16a34a;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .main-heading {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sub-heading {
+            font-size: 18px;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+            font-weight: 500;
+        }
+        
+        .content-area {
+            padding: 45px 35px;
+        }
+        
+        .intro-description {
+            text-align: center;
+            color: #4b5563;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+            font-weight: 500;
+        }
+        
+        .action-button {
+            width: 100%;
+            height: 75px;
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            font-size: 19px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 25px rgba(22, 163, 74, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .action-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(22, 163, 74, 0.5);
+        }
+        
+        .action-button:hover::before {
+            left: 100%;
+        }
+        
+        .action-button:active {
+            transform: translateY(-2px);
+        }
+        
+        .scanning-section {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .scanning-animation {
+            width: 100px;
+            height: 100px;
+            border: 8px solid #16a34a;
+            border-top: 8px solid transparent;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            animation: rotate 1.5s linear infinite;
+            position: relative;
+        }
+        
+        .scanning-animation::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #16a34a;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .scanning-primary-text {
+            color: #16a34a;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .scanning-secondary-text {
+            color: #6b7280;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .results-section {
+            animation: slideUp 0.6s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .success-notification {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 3px solid #16a34a;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            color: #15803d;
+            font-weight: 700;
+            font-size: 17px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .success-notification::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(22, 163, 74, 0.1), transparent);
+            animation: successShine 2s ease-out;
+        }
+        
+        @keyframes successShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .input-section {
+            margin-bottom: 28px;
+        }
+        
+        .input-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 18px;
+            border: 3px solid #e5e7eb;
+            border-radius: 12px;
+            background: #f9fafb;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1f2937;
+            transition: border-color 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #16a34a;
+            background: white;
+        }
+        
+        .card-number-field {
+            font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+        
+        .seat-details-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 18px;
+        }
+        
+        .process-overview {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 3px solid #3b82f6;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .process-title {
+            color: #1e40af;
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .process-steps {
+            color: #1e40af;
+            font-size: 16px;
+            line-height: 1.9;
+            padding-left: 30px;
+            font-weight: 500;
+        }
+        
+        .process-steps li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .process-steps li::marker {
+            content: "→ ";
+            font-weight: bold;
+        }
+        
+        .reset-button {
+            width: 100%;
+            padding: 18px;
+            border: 3px solid #d1d5db;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-button:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-footer {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #fafafa 0%, #f4f4f5 100%);
+            border-top: 2px solid #e5e7eb;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        .status-footer p {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .status-emphasis {
+            color: #16a34a;
+            font-weight: 700;
+            font-size: 15px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 480px) {
+            .demo-container {
+                margin: 10px;
+                border-radius: 20px;
+            }
+            
+            .content-area {
+                padding: 35px 25px;
+            }
+            
+            .seat-details-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .main-heading {
+                font-size: 28px;
+            }
+            
+            .action-button {
+                height: 70px;
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <header class="header">
+            <div class="logo-container">💳</div>
+            <h1 class="main-heading">CardShare Demo</h1>
+            <p class="sub-heading">Celtic Season Card Scanner</p>
+        </header>
+        
+        <main class="content-area">
+            <section id="initial-view">
+                <p class="intro-description">
+                    Experience secure season card transfers with Celtic Foundation revenue sharing and professional supporter network integration.
+                </p>
+                <button class="action-button" onclick="initiateScanning()" aria-label="Start card scanning demonstration">
+                    📱 Start Card Scan Demo
+                </button>
+            </section>
+
+            <section id="scanning-view" class="hidden" aria-live="polite">
+                <div class="scanning-section">
+                    <div class="scanning-animation" aria-hidden="true"></div>
+                    <p class="scanning-primary-text">Scanning Celtic Season Card</p>
+                    <p class="scanning-secondary-text">Verifying card authenticity and extracting details</p>
+                </div>
+            </section>
+
+            <section id="results-view" class="hidden">
+                <div class="results-section">
+                    <div class="success-notification" role="alert">
+                        ✅ Season Card Successfully Verified
+                    </div>
+
+                    <div class="input-section">
+                        <label class="input-label" for="card-number">Season Card Number</label>
+                        <input class="input-field card-number-field" id="card-number" value="CLT-2024-45678" readonly tabindex="-1">
+                    </div>
+                    
+                    <div class="input-section">
+                        <label class="input-label" for="holder-name">Card Holder Name</label>
+                        <input class="input-field" id="holder-name" value="Celtic Supporter" readonly tabindex="-1">
+                    </div>
+                    
+                    <div class="input-section">
+                        <label class="input-label">Seat Assignment Details</label>
+                        <div class="seat-details-grid">
+                            <input class="input-field" value="North Stand" readonly tabindex="-1" aria-label="Stand area">
+                            <input class="input-field" value="M" readonly tabindex="-1" aria-label="Row">
+                            <input class="input-field" value="45" readonly tabindex="-1" aria-label="Seat number">
+                        </div>
+                    </div>
+
+                    <div class="process-overview">
+                        <h3 class="process-title">
+                            🎯 Transfer Process Overview
+                        </h3>
+                        <ol class="process-steps">
+                            <li>Generate cryptographically secure QR transfer code</li>
+                            <li>Select duration: 3 hours (£1.99) or 6 hours (£4.99)</li>
+                            <li>Send encrypted QR code to trusted contact</li>
+                            <li>Revenue automatically shared with Celtic Foundation</li>
+                            <li>Real-time transfer tracking and verification</li>
+                        </ol>
+                    </div>
+
+                    <button class="reset-button" onclick="resetDemonstration()" aria-label="Reset demonstration to try again">
+                        🔄 Try Another Card Scan
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer class="status-footer">
+            <p class="status-emphasis">Project Status: Awaiting Legal Clearance</p>
+            <p>David Winnie (Sports Lawyer) - Legal Review in Progress</p>
+            <p>Scottish Enterprise Funding Application Submitted</p>
+            <p>Revenue Model: Platform & Celtic Foundation Partnership</p>
+        </footer>
+    </div>
+
+    <script>
+        function initiateScanning() {
+            // Hide initial view and show scanning
+            document.getElementById('initial-view').classList.add('hidden');
+            document.getElementById('scanning-view').classList.remove('hidden');
+            
+            // Simulate realistic scanning duration
+            setTimeout(() => {
+                document.getElementById('scanning-view').classList.add('hidden');
+                document.getElementById('results-view').classList.remove('hidden');
+                
+                // Announce completion for screen readers
+                const announcement = document.createElement('div');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.setAttribute('aria-atomic', 'true');
+                announcement.style.position = 'absolute';
+                announcement.style.left = '-10000px';
+                announcement.textContent = 'Season card scan completed successfully';
+                document.body.appendChild(announcement);
+                
+                setTimeout(() => document.body.removeChild(announcement), 1000);
+            }, 2800);
+        }
+
+        function resetDemonstration() {
+            // Hide results and scanning views, show initial view
+            document.getElementById('results-view').classList.add('hidden');
+            document.getElementById('scanning-view').classList.add('hidden');
+            document.getElementById('initial-view').classList.remove('hidden');
+            
+            // Focus management for accessibility
+            document.querySelector('.action-button').focus();
+        }
+
+        // Ensure demo always starts in initial state on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            resetDemonstration();
+        });
+
+        // Also reset on page refresh/reload
+        window.addEventListener('load', function() {
+            resetDemonstration();
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                resetDemonstration();
+            }
+        });
+
+        // Prevent context menu on demonstration elements
+        document.addEventListener('contextmenu', function(event) {
+            if (event.target.closest('.demo-container')) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
